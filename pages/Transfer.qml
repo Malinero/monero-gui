@@ -250,10 +250,10 @@ Rectangle {
                 anchors.right: parent.right
                 spacing: 0
 
-                readonly property int colSpacing: 10
+                readonly property int colSpacing: isAndroid ? 5 : 10
                 readonly property int rowSpacing: 10
                 readonly property int secondRowWidth: 125
-                readonly property int thirdRowWidth: 50
+                readonly property int thirdRowWidth: isAndroid ? 30 : 50
 
                 RowLayout {
                     Layout.bottomMargin: recipientLayout.rowSpacing / 2
@@ -284,6 +284,9 @@ Rectangle {
                                     const parsed = walletManager.parse_uri_to_object(codes[index]);
                                     if (!parsed.error) {
                                         fillPaymentDetails(parsed.address, parsed.payment_id, parsed.amount, parsed.tx_description, parsed.recipient_name);
+                                        break;
+                                    } else if (walletManager.addressValid(codes[index], appWindow.persistentSettings.nettype)) {
+                                        fillPaymentDetails(codes[index]);
                                         break;
                                     }
                                 }
@@ -366,6 +369,9 @@ Rectangle {
                                 spacing: 0
                                 wrapMode: Text.WrapAnywhere
                                 placeholderText: {
+                                    if(isAndroid) {
+                                      return "4.. / 8..";
+                                    }
                                     if(persistentSettings.nettype == NetworkType.MAINNET){
                                         return "4.. / 8.. / OpenAlias";
                                     } else if (persistentSettings.nettype == NetworkType.STAGENET){
@@ -444,6 +450,7 @@ Rectangle {
                                 Layout.bottomMargin: recipientLayout.rowSpacing / 2
                                 Layout.rightMargin: recipientLayout.colSpacing / 2
                                 Layout.preferredWidth: 125
+                                Layout.minimumWidth: 125
                                 borderDisabled: true
                                 fontFamily: MoneroComponents.Style.fontMonoRegular.name
                                 fontSize: 14
