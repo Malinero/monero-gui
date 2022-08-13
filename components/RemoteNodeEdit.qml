@@ -37,6 +37,7 @@ import "../components" as MoneroComponents
 GridLayout {
     columns: 2
     columnSpacing: 32
+    Layout.rightMargin: 20
     id: root
     property alias daemonAddrText: daemonAddr.text
     property alias daemonPortText: daemonPort.text
@@ -67,6 +68,7 @@ GridLayout {
     signal textChanged()
 
     onActiveFocusChanged: activeFocus && daemonAddr.forceActiveFocus()
+    flow:  isMobile ? GridLayout.TopToBottom : GridLayout.LeftToRight
 
     function isValid() {
         return daemonAddr.text.trim().length > 0 && daemonPort.acceptableInput

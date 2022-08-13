@@ -483,6 +483,7 @@ Verify update binary using 'shasum'-compatible (SHA256 algo) output signed by tw
     engine.rootContext()->setContextProperty("isAndroid", isAndroid);
     engine.rootContext()->setContextProperty("isOpenGL", isOpenGL);
     engine.rootContext()->setContextProperty("isTails", isTails);
+    engine.rootContext()->setContextProperty("isMobile", isAndroid or isIOS);
 
     engine.rootContext()->setContextProperty("screenAvailableWidth", screenAvailableSize.width());
     engine.rootContext()->setContextProperty("screenAvailableHeight", screenAvailableSize.height());

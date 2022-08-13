@@ -59,7 +59,7 @@ ApplicationWindow {
         (persistentSettings.displayWalletNameInTitleBar && walletName
         ? " - " + walletName
         : "")
-    minimumWidth: 750
+    minimumWidth: isMobile ? 375 : 750
     minimumHeight: 450
 
     property var currentItem
@@ -75,7 +75,7 @@ ApplicationWindow {
     property int restoreHeight:0
     property bool daemonSynced: false
     property bool walletSynced: false
-    property int maxWindowHeight: (isAndroid || isIOS)? screenAvailableHeight : (screenAvailableHeight < 900)? 720 : 800;
+    property int maxWindowHeight: isMobile ? screenAvailableHeight : (screenAvailableHeight < 900)? 720 : 800;
     property bool daemonRunning: !persistentSettings.useRemoteNode && !disconnected
     property int daemonStartStopInProgress: 0
     property alias toolTip: toolTip
@@ -1383,7 +1383,7 @@ ApplicationWindow {
         property bool   is_trusted_daemon : false  // TODO: drop after v0.17.2.0 release
         property bool   is_recovering : false
         property bool   is_recovering_from_device : false
-        property bool   customDecorations : true
+        property bool   customDecorations : !isMobile
         property string daemonFlags
         property string p2poolFlags
         property int logLevel: 0
@@ -1395,7 +1395,7 @@ ApplicationWindow {
         property bool historyShowAdvanced: false
         property bool historyHumanDates: true
         property string blockchainDataDir: ""
-        property bool useRemoteNode: false
+        property bool useRemoteNode: !isMobile
         property string remoteNodeAddress: "" // TODO: drop after v0.17.2.0 release
         property string remoteNodesSerialized: JSON.stringify({
                 selected: 0,
@@ -1618,6 +1618,7 @@ ApplicationWindow {
 
     MoneroComponents.RemoteNodeDialog {
         id: remoteNodeDialog
+        y: isMobile ? 10 : (parent.height - height) / 2
     }
 
     // Choose blockchain folder
@@ -1768,9 +1769,50 @@ ApplicationWindow {
             id: blurredArea
             anchors.fill: parent
 
+            UpperPanel {
+                id: upperPanel
+                visible: isMobile && rootItem.state == "normal" && middlePanel.state !== "Merchant"
+                z: leftPanel.z
+                height: 50
+                anchors.top: parent.top
+                //anchors.bottom: leftPanel.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                onAccountClicked: {
+                    middlePanel.state = "Account";
+                    middlePanel.flickable.contentY = 0;
+                    updateBalance();
+                }
+
+                onTransferClicked: {
+                    middlePanel.state = "Transfer";
+                    middlePanel.flickable.contentY = 0;
+                    updateBalance();
+                }
+
+                onReceiveClicked: {
+                    middlePanel.state = "Receive";
+                    middlePanel.flickable.contentY = 0;
+                    updateBalance();
+                }
+
+                onHistoryClicked: {
+                    middlePanel.state = "History";
+                    middlePanel.flickable.contentY = 0;
+                    updateBalance();
+                }
+
+                onSettingsClicked: {
+                    middlePanel.state = "Settings";
+                    middlePanel.flickable.contentY = 0;
+                    updateBalance();
+                }
+            }
+
             LeftPanel {
                 id: leftPanel
-                anchors.top: parent.top
+                anchors.top: isMobile ? upperPanel.bottom : parent.top
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
                 visible: rootItem.state == "normal" && middlePanel.state != "Merchant"
@@ -1828,7 +1870,7 @@ ApplicationWindow {
             MiddlePanel {
                 id: middlePanel
                 accountView.currentAccountIndex: currentWallet ? currentWallet.currentSubaddressAccount : 0
-                anchors.top: parent.top
+                anchors.top: isMobile ? upperPanel.bottom : parent.top
                 anchors.bottom: parent.bottom
                 anchors.left: leftPanel.visible ? leftPanel.right : parent.left
                 anchors.right: parent.right
@@ -2106,8 +2148,8 @@ ApplicationWindow {
     onClosing: {
         close.accepted = false;
         console.log("blocking close event");
-        if(isAndroid) {
-            console.log("blocking android exit");
+        if(isMobile) {
+            console.log("blocking mobile exit");
             if(qrScannerEnabled)
                 cameraUi.state = "Stopped"
 
@@ -2195,7 +2237,7 @@ ApplicationWindow {
 
     function releaseFocus() {
         // Workaround to release focus from textfield when scrolling (https://bugreports.qt.io/browse/QTBUG-34867)
-        if(isAndroid) {
+        if(isMobile) {
             console.log("releasing focus")
             middlePanel.focus = true
             middlePanel.focus = false

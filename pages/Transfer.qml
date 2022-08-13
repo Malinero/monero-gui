@@ -250,10 +250,10 @@ Rectangle {
                 anchors.right: parent.right
                 spacing: 0
 
-                readonly property int colSpacing: 10
+                readonly property int colSpacing: isMobile ? 5 : 10
                 readonly property int rowSpacing: 10
                 readonly property int secondRowWidth: 125
-                readonly property int thirdRowWidth: 50
+                readonly property int thirdRowWidth: isMobile ? 30 : 50
 
                 RowLayout {
                     Layout.bottomMargin: recipientLayout.rowSpacing / 2
@@ -393,13 +393,15 @@ Rectangle {
                                 spacing: 0
                                 wrapMode: Text.WrapAnywhere
                                 placeholderText: {
+                                    var address = "";
                                     if(persistentSettings.nettype == NetworkType.MAINNET){
-                                        return "4.. / 8.. / monero:.. / OpenAlias";
+                                        address = "4.. / 8.. / monero:.. / OpenAlias";
                                     } else if (persistentSettings.nettype == NetworkType.STAGENET){
-                                        return "5.. / 7.. / monero:..";
+                                        address = "5.. / 7.. / monero:..";
                                     } else if(persistentSettings.nettype == NetworkType.TESTNET){
-                                        return "9.. / B.. / monero:..";
+                                        address = "9.. / B.. / monero:..";
                                     }
+                                    return isMobile ? address.substring(0, 8) : address;
                                 }
                                 onTextChanged: {
                                     const parsed = walletManager.parse_uri_to_object(text);
