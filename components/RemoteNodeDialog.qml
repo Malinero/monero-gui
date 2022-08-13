@@ -89,6 +89,9 @@ MoneroComponents.Dialog {
         root.success = false;
     }
 
+    ColumnLayout {
+        Layout.fillWidth: true
+
     MoneroComponents.RemoteNodeEdit {
         id: remoteNodeAddress
         Layout.fillWidth: true
@@ -103,9 +106,10 @@ MoneroComponents.Dialog {
         Keys.onEscapePressed: root.onCancel()
     }
 
-    RowLayout {
+    GridLayout {
         Layout.fillWidth: true
-        spacing: 32
+        rowSpacing: 32
+        flow:  isMobile ? GridLayout.TopToBottom : GridLayout.LeftToRight
 
         MoneroComponents.LineEdit {
             id: daemonUsername
@@ -166,5 +170,6 @@ MoneroComponents.Dialog {
                 root.close();
             }
         }
+    }
     }
 }

@@ -37,6 +37,8 @@ import "../components" as MoneroComponents
 ColumnLayout {
     id: root
     Layout.fillWidth: true
+    Layout.alignment: Qt.AlignHCenter;
+    width: parent.width - (isMobile ? 30 : 100)
     property alias password: passwordInput.text
     property alias passwordConfirm: passwordInputConfirm.text
     property int passwordFill: 0
@@ -109,7 +111,7 @@ ColumnLayout {
         ColumnLayout {
             id: progressLayout
             spacing: 0
-            visible: !isAndroid && walletManager.getPasswordStrength !== undefined
+            visible: !isMobile && walletManager.getPasswordStrength !== undefined
             Layout.fillWidth: true
             Layout.topMargin: 0
 

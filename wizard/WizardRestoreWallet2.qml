@@ -48,7 +48,7 @@ Rectangle {
     ColumnLayout {
         id: pageRoot
         Layout.alignment: Qt.AlignHCenter;
-        width: parent.width - 100
+        width: parent.width - (isMobile ? 30: 100)
         Layout.fillWidth: true
         anchors.horizontalCenter: parent.horizontalCenter;
 

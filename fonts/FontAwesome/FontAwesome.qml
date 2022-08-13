@@ -73,4 +73,6 @@ Object {
     property string shieldAlt : "\uf3ed"
     property string signOutAlt : "\uf2f5"
     property string times : "\uf00d"
+    property string bars : "\uf0c9"
+    property string cog : "\uf013"
 }

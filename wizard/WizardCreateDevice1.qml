@@ -60,7 +60,7 @@ Rectangle {
     ColumnLayout {
         id: pageRoot
         Layout.alignment: Qt.AlignHCenter;
-        width: parent.width - 100
+        width: parent.width - (isMobile ? 30 : 100)
         Layout.fillWidth: true
         anchors.horizontalCenter: parent.horizontalCenter;
 
@@ -131,7 +131,7 @@ Rectangle {
                      MoneroComponents.RadioButton {
                          id: restoreDeviceWallet
                          Layout.topMargin: 10
-                         text: qsTr("Restore a wallet from device. Use this if you used your hardware wallet before.") + translationManager.emptyString
+                         text: qsTr("Restore a wallet from device.") + (isMobile ? "" : qsTr(" Use this if you used your hardware wallet before.")) + translationManager.emptyString
                          fontSize: 16
                          checked: false
                          onClicked: {

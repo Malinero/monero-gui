@@ -67,6 +67,7 @@ GridLayout {
     signal textChanged()
 
     onActiveFocusChanged: activeFocus && daemonAddr.forceActiveFocus()
+    flow:  isMobile ? GridLayout.TopToBottom : GridLayout.LeftToRight
 
     function isValid() {
         return daemonAddr.text.trim().length > 0 && daemonPort.acceptableInput

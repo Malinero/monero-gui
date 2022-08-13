@@ -75,7 +75,7 @@ Rectangle {
         menuColumn.previousButton.checked = true
     }
 
-    width: 300
+    width: isMobile ? upperPanel.width : 300
     color: "transparent"
     anchors.bottom: parent.bottom
     anchors.top: parent.top
@@ -366,6 +366,7 @@ Rectangle {
                     parent.previousButton.checked = false
                     parent.previousButton = accountButton
                     panel.accountClicked()
+                    isMobile ? leftPanel.visible = false : ""
                 }
             }
 
@@ -387,6 +388,7 @@ Rectangle {
                     parent.previousButton.checked = false
                     parent.previousButton = transferButton
                     panel.transferClicked()
+                    isMobile ? leftPanel.visible = false : ""
                 }
             }
 
@@ -410,6 +412,7 @@ Rectangle {
                     parent.previousButton.checked = false
                     parent.previousButton = addressBookButton
                     panel.addressBookClicked()
+                    isMobile ? leftPanel.visible = false : ""
                 }
             }
 
@@ -431,6 +434,7 @@ Rectangle {
                     parent.previousButton.checked = false
                     parent.previousButton = receiveButton
                     panel.receiveClicked()
+                    isMobile ? leftPanel.visible = false : ""
                 }
             }
 
@@ -453,6 +457,7 @@ Rectangle {
                     parent.previousButton.checked = false
                     parent.previousButton = historyButton
                     panel.historyClicked()
+                    isMobile ? leftPanel.visible = false : ""
                 }
             }
 
@@ -466,7 +471,7 @@ Rectangle {
             // ------------- Advanced tab ---------------
             MoneroComponents.MenuButton {
                 id: advancedButton
-                visible: appWindow.walletMode >= 2
+                visible: appWindow.walletMode >= 2 && !isMobile
                 anchors.left: parent.left
                 anchors.right: parent.right
                 text: qsTr("Advanced") + translationManager.emptyString
@@ -475,6 +480,7 @@ Rectangle {
                     parent.previousButton.checked = false
                     parent.previousButton = advancedButton
                     panel.advancedClicked()
+                    isMobile ? leftPanel.visible = false : ""
                 }
             }
 
@@ -496,6 +502,7 @@ Rectangle {
                     parent.previousButton.checked = false
                     parent.previousButton = settingsButton
                     panel.settingsClicked()
+                    isMobile ? leftPanel.visible = false : ""
                 }
             }
 

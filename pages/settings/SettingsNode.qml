@@ -55,6 +55,7 @@ Rectangle{
             Layout.fillWidth: true
             Layout.preferredHeight: 90
             color: "transparent"
+            visible: !isMobile
 
             Rectangle {
                 id: localNodeDivider
@@ -148,6 +149,7 @@ Rectangle{
             Layout.fillWidth: true
             Layout.preferredHeight: 90
             color: "transparent"
+            visible: !isMobile
 
             Rectangle {
                 id: remoteNodeDivider

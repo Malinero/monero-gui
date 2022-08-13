@@ -88,7 +88,7 @@ Rectangle {
     ColumnLayout {
         id: pageRoot
         Layout.alignment: Qt.AlignHCenter;
-        width: parent.width - 100
+        width: parent.width - (isMobile ? 30 : 100)
         Layout.fillWidth: true
         anchors.horizontalCenter: parent.horizontalCenter;
 
@@ -112,7 +112,7 @@ Rectangle {
 
             RowLayout {
                 Layout.topMargin: -10
-                spacing: 30
+                spacing: (isMobile ? 0 : 30)
                 Layout.fillWidth: true
 
                 MoneroComponents.RadioButton {

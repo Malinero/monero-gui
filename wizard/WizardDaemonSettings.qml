@@ -54,8 +54,8 @@ ColumnLayout {
         Layout.fillWidth: true
         text: qsTr("Start a node automatically in background (recommended)") + translationManager.emptyString
         fontSize: 16
-        checked: !appWindow.persistentSettings.useRemoteNode && !isAndroid && !isIOS
-        visible: !isAndroid && !isIOS
+        checked: !appWindow.persistentSettings.useRemoteNode && !isMobile
+        visible: !isMobile
         onClicked: {
             checked = true;
             remoteNode.checked = false;
