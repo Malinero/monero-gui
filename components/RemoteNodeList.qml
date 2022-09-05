@@ -38,16 +38,36 @@ ColumnLayout {
     id: remoteNodeList
     spacing: 20
 
-    MoneroComponents.CheckBox {
-        border: false
-        checkedIcon: FontAwesome.minusCircle
-        uncheckedIcon: FontAwesome.plusCircle
-        fontAwesomeIcons: true
-        fontSize: 16
-        iconOnTheLeft: true
-        text: qsTr("Add remote node") + translationManager.emptyString
-        toggleOnClick: false
-        onClicked: remoteNodeDialog.add(remoteNodesModel.append)
+    function updateFromQrCode(uri, payment_id, amount, tx_description, recipient_name) {
+        remoteNodesModel.append({"address": uri, "username": "", "password": "", "trusted": false})
+        cameraUi.qrcode_decoded.disconnect(updateFromQrCode)
+        // TODO : ask to start I2P/Tor if endswith .i2p or .onion
+    }
+
+    RowLayout {
+        MoneroComponents.CheckBox {
+            border: false
+            checkedIcon: FontAwesome.minusCircle
+            uncheckedIcon: FontAwesome.plusCircle
+            fontAwesomeIcons: true
+            fontSize: 16
+            iconOnTheLeft: true
+            text: qsTr("Add remote node") + translationManager.emptyString
+            toggleOnClick: false
+            onClicked: remoteNodeDialog.add(remoteNodesModel.append)
+        }
+        MoneroComponents.InlineButton {
+            fontFamily: FontAwesome.fontFamilySolid
+            fontStyleName: "Solid"
+            text: FontAwesome.qrcode
+            visible: appWindow.qrScannerEnabled
+            tooltip: qsTr("Scan QR code") + translationManager.emptyString
+            onClicked: {
+                cameraUi.state = "Capture"
+                cameraUi.expectedPaymentURI = false
+                cameraUi.qrcode_decoded.connect(updateFromQrCode)
+            }
+        }
     }
 
     ColumnLayout {

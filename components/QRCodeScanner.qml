@@ -43,6 +43,7 @@ Rectangle {
     visible: false
     color: "black"
     state: "Stopped"
+    property bool expectedPaymentURI: true
 
     signal qrcode_decoded(string address, string payment_id, string amount, string tx_description, string recipient_name, var extra_parameters)
 
@@ -82,6 +83,7 @@ Rectangle {
             focusMode: Camera.FocusContinuous
         }
     }
+
     QRCodeScanner {
         id : finder
         objectName: "QrFinder"
@@ -93,6 +95,10 @@ Rectangle {
             } else if (walletManager.addressValid(data, appWindow.persistentSettings.nettype)) {
                 root.qrcode_decoded(data, "", "", "", "", null);
                 root.state = "Stopped";
+            } else if (!expectedPaymentURI) {
+                root.qrcode_decoded(data, "", "", "", "", null);
+                root.state = "Stopped";
+                root.expectedPaymentURI = true;
             } else {
                 onNotifyError(parsed.error);
             }
