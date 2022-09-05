@@ -81,6 +81,43 @@
 
     <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
 
+    <service android:process=":i2p_service" android:name=".MoneroI2PService" android:exported="true">
+        <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
+        <meta-data android:name="android.app.bundle_local_qt_libs" android:value="-- %%BUNDLE_LOCAL_QT_LIBS%% --"/>
+
+        <meta-data android:name="android.app.use_local_qt_libs" android:value="-- %%USE_LOCAL_QT_LIBS%% --"/>
+        <meta-data android:name="android.app.libs_prefix" android:value="/data/local/tmp/qt/"/>
+        <meta-data android:name="android.app.load_local_libs_resource_id" android:resource="@array/load_local_libs"/>
+        <meta-data android:name="android.app.load_local_jars" android:value="jar/QtAndroidBearer.jar:jar/QtAndroid.jar"/>
+        <meta-data android:name="android.app.static_init_classes" android:value=""/>
+
+        <meta-data android:value="@string/fatal_error_msg" android:name="android.app.fatal_error_msg"/>
+        <meta-data android:value="@string/unsupported_android_version" android:name="android.app.unsupported_android_version"/>
+
+        <meta-data android:name="android.app.background_running" android:value="true"/>
+
+        <meta-data android:name="android.app.arguments" android:value="-service"/>
+    </service>
+
+    <service android:process=":tor_service" android:name=".MoneroTorService" android:exported="true">
+        <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
+        <meta-data android:name="android.app.bundle_local_qt_libs" android:value="-- %%BUNDLE_LOCAL_QT_LIBS%% --"/>
+
+        <meta-data android:name="android.app.use_local_qt_libs" android:value="-- %%USE_LOCAL_QT_LIBS%% --"/>
+        <meta-data android:name="android.app.libs_prefix" android:value="/data/local/tmp/qt/"/>
+        <meta-data android:name="android.app.load_local_libs_resource_id" android:resource="@array/load_local_libs"/>
+        <meta-data android:name="android.app.load_local_jars" android:value="jar/QtAndroidBearer.jar:jar/QtAndroid.jar"/>
+        <meta-data android:name="android.app.static_init_classes" android:value=""/>
+
+        <meta-data android:value="@string/fatal_error_msg" android:name="android.app.fatal_error_msg"/>
+        <meta-data android:value="@string/unsupported_android_version" android:name="android.app.unsupported_android_version"/>
+
+        <meta-data android:name="android.app.background_running" android:value="true"/>
+
+        <meta-data android:name="android.app.arguments" android:value="-service"/>
+    </service>
+
+
     </application>
 
 </manifest>

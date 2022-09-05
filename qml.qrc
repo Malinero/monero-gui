@@ -172,6 +172,7 @@
         <file>pages/settings/SettingsLog.qml</file>
         <file>pages/settings/SettingsLayout.qml</file>
         <file>pages/settings/SettingsInfo.qml</file>
+        <file>pages/settings/SettingsNetwork.qml</file>
         <file>components/WarningBox.qml</file>
         <file>images/miningxmr.png</file>
         <file>images/miningxmr@2x.png</file>
@@ -269,5 +270,8 @@
         <file>images/ledgerNanoX.png</file>
         <file>images/trezor.png</file>
         <file>images/trezor@2x.png</file>
+        <file>images/tor.png</file>
+        <file>images/i2p.png</file>
+        <file>images/i2p_white.png</file>
     </qresource>
 </RCC>

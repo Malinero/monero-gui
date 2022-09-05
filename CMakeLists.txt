@@ -55,6 +55,10 @@ endif()
 add_subdirectory(monero)
 add_subdirectory(external)
 
+if(ANDROID)
+  set(ANDROID_PACKAGE_SOURCE_DIR ${PROJECT_SOURCE_DIR}/android CACHE INTERNAL "")
+endif()
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -128,6 +132,8 @@ endif()
 
 if(APPLE)
   list(APPEND QT5_LIBRARIES Qt5MacExtras)
+elseif(ANDROID)
+  list(APPEND QT5_LIBRARIES Qt5AndroidExtras)
 endif()
 
 if(UNIX)

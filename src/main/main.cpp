@@ -85,6 +85,10 @@
 #include <QOpenGLContext>
 #elif defined(Q_OS_MACOS)
 #include "qt/macoshelper.h"
+#elif defined(Q_OS_ANDROID)
+#include <QAndroidService>
+#include "daemon/I2PManager.h"
+#include "daemon/TorManager.h"
 #endif
 
 #ifdef WITH_SCANNER
@@ -159,6 +163,14 @@ bool isOpenGL = true;
 
 int main(int argc, char *argv[])
 {
+#if defined(Q_OS_ANDROID)
+    if (argc > 1 && strcmp(argv[1], "-service") == 0) {
+        qDebug() << "Service starting with from the same .so file";
+        QAndroidService service(argc, argv);
+        return service.exec();
+    }
+#endif
+
     Q_INIT_RESOURCE(translations);
 
     // platform dependant settings
@@ -475,7 +487,12 @@ Verify update binary using 'shasum'-compatible (SHA256 algo) output signed by tw
     engine.rootContext()->setContextProperty("daemonManager", &daemonManager);
     engine.rootContext()->setContextProperty("p2poolManager", &p2poolManager);
 #endif
-
+#ifdef Q_OS_ANDROID
+    I2PManager i2pManager;
+    TorManager torManager;
+    engine.rootContext()->setContextProperty("i2pManager", &i2pManager);
+    engine.rootContext()->setContextProperty("torManager", &torManager);
+#endif
     engine.rootContext()->setContextProperty("isWindows", isWindows);
     engine.rootContext()->setContextProperty("isMac", isMac);
     engine.rootContext()->setContextProperty("isLinux", isLinux);

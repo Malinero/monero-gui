@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_status_error_i2cp">Client manager I2CP error - check logs</string>
+    <!-- Parameter is a time, e.g. 32s or 2m -->
+    <string name="net_status_error_skew">Clock skew of %s</string>
+    <string name="net_status_error_unresolved_tcp">Unresolved TCP address</string>
+    <string name="net_status_error_private_tcp">Private TCP address</string>
+    <string name="net_status_warn_firewalled_inbound_tcp">Firewalled with inbound TCP enabled</string>
+    <string name="net_status_warn_firewalled_floodfill">Firewalled and floodfill</string>
+    <string name="net_status_info_disconnected">Disconnected - check network connection</string>
+    <string name="net_status_error_udp_port">UDP port in use - change in settings and restart</string>
+    <string name="net_status_error_no_active_peers">No active peers - check network connection and firewall</string>
+    <string name="net_status_error_udp_disabled_tcp_not_set">UDP disabled and inbound TCP host/port not set</string>
+    <string name="net_status_warn_firewalled_udp_disabled">Firewalled with UDP disabled</string>
+
+    <string name="notification_status_starting">I2P is starting up</string>
+    <string name="notification_status_restarting">I2P is restarting</string>
+    <string name="notification_status_waiting">I2P is waiting for a network connection</string>
+    <string name="notification_status_starting_after_waiting">Network connected, I2P is starting up</string>
+    <string name="notification_status_running">I2P is running</string>
+    <string name="notification_status_client_ready">Client tunnels are ready</string>
+    <string name="notification_status_client_down">Client tunnels are down</string>
+    <string name="notification_status_graceful">Stopping I2P in %s</string>
+    <string name="notification_status_stopping">Stopping I2P</string>
+    <string name="notification_status_stopping_after_net">Network disconnected, stopping I2P</string>
+    <string name="notification_status_shutdown_cancelled">Shutdown cancelled</string>
+    <string name="notification_status_shutting_down">I2P is shutting down</string>
+    <string name="notification_status_text" translatable="false">%1$sBps ↓ / %2$sBps ↑</string>
+    <string name="notification_status_bw">Bandwidth: %1$sBps down / %2$sBps up</string>
+    <string name="notification_status_peers">Peers: %1$d active, %2$d known</string>
+    <string name="notification_status_expl">Exploratory tunnels: %1$d/%2$d</string>
+    <string name="notification_status_client">Client tunnels: %1$d/%2$d</string>
+</resources>

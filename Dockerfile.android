@@ -216,6 +216,13 @@ RUN GRADLE_VERSION=5.6.4 \
 
 ENV GRADLE_USER_HOME=${WORKDIR}/gradle
 
+RUN git clone https://github.com/i2p/i2p.i2p --depth=1 -b master \
+    && cd i2p.i2p \
+    && ant jar \
+    && cd core/c/jbigi \
+    && sed -i -e 's/r19c/r21e/' mbuild-all.sh \
+    && PATH=${HOST_PATH} TARGET=android BITS=64 ./mbuild-all.sh
+
 CMD set -ex \
     && cd /monero-gui \
     && mkdir -p build/Android/release \

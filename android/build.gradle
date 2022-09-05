@@ -1,0 +1,157 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.0'
+    }
+}
+
+repositories {
+    google()
+    jcenter()
+}
+
+apply plugin: 'com.android.application'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation 'info.guardianproject:tor-android:0.4.7.8'
+    implementation 'info.guardianproject:jtorctl:0.4.5.7'
+    api 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    //api 'net.i2p:i2p:1.8.0'
+    //api 'net.i2p:router:1.8.0'
+    api 'com.android.support:support-v4:+'
+}
+
+android {
+    /*******************************************************
+     * The following variables:
+     * - androidBuildToolsVersion,
+     * - androidCompileSdkVersion
+     * - qt5AndroidDir - holds the path to qt android files
+     *                   needed to build any Qt application
+     *                   on Android.
+     *
+     * are defined in gradle.properties file. This file is
+     * updated by QtCreator and androiddeployqt tools.
+     * Changing them manually might break the compilation!
+     *******************************************************/
+
+    compileSdkVersion androidCompileSdkVersion.toInteger()
+
+    buildToolsVersion '28.0.3'
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = [qt5AndroidDir + '/src', 'src', 'java']
+            aidl.srcDirs = [qt5AndroidDir + '/src', 'src', 'aidl']
+            res.srcDirs = [qt5AndroidDir + '/res', 'res']
+            resources.srcDirs = ['resources']
+            renderscript.srcDirs = ['src']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+       }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.incremental = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    // Do not compress Qt binary resources file
+    aaptOptions {
+        noCompress 'rcc'
+    }
+
+    defaultConfig {
+        resConfig "en"
+        minSdkVersion = 21
+        targetSdkVersion = 30
+    }
+
+    packagingOptions {
+        exclude 'META-INF/androidx.localbroadcastmanager_localbroadcastmanager.version'
+    }
+}
+
+
+/***************************
+ *  I2P related stuffs
+ ***************************/
+project.ext.i2pbase = "/opt/android/i2p.i2p"
+task certificatesZip(type: Zip) {
+    archiveName = 'certificates_zip'
+    from files('' + i2pbase + '/installer/resources/certificates')
+}
+task copyI2PResources(type: Copy) {
+    // Force this to always run: Copy only detects source changes, not if missing in destination
+    outputs.upToDateWhen { false }
+    into 'res'
+    into('drawable') {
+        from file(i2pbase + '/apps/routerconsole/jsp/themes/console/images/i2plogo.png')
+    }
+    into('raw') {
+        from(i2pbase + '/installer/resources/blocklist.txt') { rename { 'blocklist_txt' } }
+        from(i2pbase + '/installer/resources/hosts.txt') { rename { 'hosts_txt' } }
+        from(i2pbase + '/LICENSE.txt') { rename { 'license_i2p_txt' } }
+        from(i2pbase + '/licenses/LICENSE-Apache2.0.txt') { rename { 'license_apache20_txt' } }
+        from(i2pbase + '/licenses') {
+            include { elem ->
+                elem.name in [
+                        'LICENSE-ElGamalDSA.txt',
+                        'LICENSE-SHA256.txt',
+                        'LICENSE-BSD.txt',
+                        'LICENSE-SNTP.txt',
+                        'LICENSE-LGPLv2.1.txt',
+                        'LICENSE-InstallCert.txt',
+                        'LICENSE-BlockFile.txt',
+                        'LICENSE-GPLv2.txt',
+                        'LICENSE-GPLv3.txt',
+                        'LICENSE-LGPLv3.txt',
+                        'LICENSE-FatCowIcons.txt',
+                        'LICENSE-Addressbook.txt',
+                ]
+            }
+            rename { String name ->
+                name.toLowerCase(Locale.US).replace('-', '_').replace('.', '_')
+            }
+        }
+        from certificatesZip
+    }
+}
+task copyI2PLibs(type: Copy) {
+    outputs.upToDateWhen { false }
+    into './'
+    into('libs') {
+        from file(i2pbase + '/build/i2p.jar')
+        from file(i2pbase + '/build/i2ptunnel.jar')
+        from file(i2pbase + '/build/router.jar')
+        from file(i2pbase + '/build/streaming.jar')
+        from file(i2pbase + '/build/mstreaming.jar')
+    }
+}
+
+task copyI2Pjbigi(type: Copy) {
+    outputs.upToDateWhen { false }
+    into 'libs'
+    into('arm64-v8a') {
+        from(i2pbase + '/core/c/jbigi/bin/aarch64/libjbigi.so')
+    }
+}
+
+preBuild.dependsOn copyI2PResources
+preBuild.dependsOn copyI2PLibs
+preBuild.dependsOn copyI2Pjbigi
+

@@ -71,6 +71,10 @@ Rectangle {
         }
     }
 
+    function getNetworkStatusString() {
+        return persistentSettings.networkMode <= 1 ? "" : qsTr(", via");
+    }
+
     RowLayout {
         Layout.preferredHeight: 40
 
@@ -142,7 +146,7 @@ Rectangle {
                 font.family: MoneroComponents.Style.fontMedium.name
                 font.pixelSize: 20
                 color: MoneroComponents.Style.defaultFontColor
-                text: getConnectionStatusString(item.connected) + translationManager.emptyString
+                text: getConnectionStatusString(item.connected) + getNetworkStatusString() + translationManager.emptyString
                 opacity: MoneroComponents.Style.blackTheme ? 1.0 : 0.7
                 themeTransition: false
 
@@ -205,6 +209,42 @@ Rectangle {
 
                         refreshMouseArea.visible = false;
                         appWindow.showStatusMessage(qsTr("Switching to another public node"), 3);
+                    }
+                }
+            }
+        }
+
+        Item {
+            id: networkItem
+            width: 40
+            height: 40
+            opacity: {
+                if(item.connected == Wallet.ConnectionStatus_Connected){
+                    return 1
+                } else {
+                    MoneroComponents.Style.blackTheme ? 0.5 : 0.3
+                }
+            }
+
+            Image {
+                anchors.top: parent.top
+                anchors.topMargin: 4
+                anchors.right: parent.right
+                anchors.rightMargin: 4
+                source: {
+                    switch(persistentSettings.networkMode) {
+                        case 2: return "qrc:///images/i2p_white.png";
+                        case 3: return "qrc:///images/tor.png";
+                    }
+                    return ""
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    visible: persistentSettings.networkMode > 1
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        middlePanel.settingsView.settingsStateViewState = "Network";
+                        appWindow.showPageRequest("Settings");
                     }
                 }
             }

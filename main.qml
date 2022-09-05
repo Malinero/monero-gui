@@ -1430,6 +1430,7 @@ ApplicationWindow {
         property string fiatPriceProvider: "kraken"
         property string fiatPriceCurrency: "xmrusd"
 
+        property int networkMode: 0
         property string proxyAddress: "127.0.0.1:9050"
         property bool proxyEnabled: isTails
         function getProxyAddress() {

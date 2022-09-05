@@ -244,6 +244,7 @@ Rectangle {
         MoneroComponents.CheckBox {
             id: proxyCheckbox
             Layout.topMargin: 6
+            visible: !isAndroid
             enabled: !socksProxyFlagSet
             checked: socksProxyFlagSet ? socksProxyFlag : persistentSettings.proxyEnabled
             onClicked: {
@@ -261,7 +262,7 @@ Rectangle {
             Layout.topMargin: 6
             Layout.minimumWidth: 100
             placeholderFontSize: 15
-            visible: proxyCheckbox.checked
+            visible: proxyCheckbox.checked && !isAndroid
 
             daemonAddrLabelText: qsTr("IP address") + translationManager.emptyString
             daemonPortLabelText: qsTr("Port") + translationManager.emptyString
