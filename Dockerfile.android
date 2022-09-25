@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:buster-slim
 
 ARG THREADS=1
 ARG ANDROID_NDK_REVISION=21e
@@ -8,18 +8,18 @@ ARG ANDROID_SDK_HASH=7a00faadc0864f78edd8f4908a629a46d622375cbe2e5814e82934aebec
 ARG QT_VERSION=v5.15.6-lts-lgpl
 
 WORKDIR /opt/android
-ENV WORKDIR=/opt/android
+ENV WORKDIR=/opt/android \
+    JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 \
+    ANDROID_NATIVE_API_LEVEL=29
 
-ENV ANDROID_NATIVE_API_LEVEL=29
-ENV ANDROID_API=android-${ANDROID_NATIVE_API_LEVEL}
-ENV ANDROID_CLANG=aarch64-linux-android${ANDROID_NATIVE_API_LEVEL}-clang
-ENV ANDROID_CLANGPP=aarch64-linux-android${ANDROID_NATIVE_API_LEVEL}-clang++
-ENV ANDROID_NDK_ROOT=${WORKDIR}/android-ndk-r${ANDROID_NDK_REVISION}
-ENV ANDROID_SDK_ROOT=${WORKDIR}/cmdline-tools
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-ENV PATH=${JAVA_HOME}/bin:${PATH}
-ENV PREFIX=${WORKDIR}/prefix
-ENV TOOLCHAIN_DIR=${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64
+ENV ANDROID_API=android-${ANDROID_NATIVE_API_LEVEL} \
+    ANDROID_CLANG=aarch64-linux-android${ANDROID_NATIVE_API_LEVEL}-clang \
+    ANDROID_CLANGPP=aarch64-linux-android${ANDROID_NATIVE_API_LEVEL}-clang++ \
+    ANDROID_NDK_ROOT=${WORKDIR}/android-ndk-r${ANDROID_NDK_REVISION} \
+    ANDROID_SDK_ROOT=${WORKDIR}/cmdline-tools \
+    PATH=${JAVA_HOME}/bin:${PATH} \
+    PREFIX=${WORKDIR}/prefix \
+    TOOLCHAIN_DIR=${WORKDIR}/android-ndk-r${ANDROID_NDK_REVISION}/toolchains/llvm/prebuilt/linux-x86_64
 
 RUN apt-get update \
     && apt-get install -y ant automake build-essential ca-certificates-java file gettext git libc6 libncurses5 \
@@ -36,9 +36,8 @@ RUN PACKAGE_NAME=android-ndk-r${ANDROID_NDK_REVISION}-linux-x86_64.zip \
     && wget -q https://dl.google.com/android/repository/${PACKAGE_NAME} \
     && echo "${ANDROID_NDK_HASH}  ${PACKAGE_NAME}" | sha1sum -c \
     && unzip -q ${PACKAGE_NAME} \
-    && rm -f ${PACKAGE_NAME}
-
-RUN echo y | ${ANDROID_SDK_ROOT}/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "build-tools;28.0.3" "platforms;${ANDROID_API}" "tools" > /dev/null
+    && rm -f ${PACKAGE_NAME} \
+    && echo y | ${ANDROID_SDK_ROOT}/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "build-tools;28.0.3" "platforms;${ANDROID_API}" "tools" > /dev/null
 
 ENV HOST_PATH=${PATH}
 ENV PATH=${TOOLCHAIN_DIR}/aarch64-linux-android/bin:${TOOLCHAIN_DIR}/bin:${PATH}
@@ -96,7 +95,8 @@ RUN wget -q http://ftp.gnu.org/pub/gnu/libiconv/libiconv-${ICONV_VERSION}.tar.gz
     && cd libiconv-${ICONV_VERSION} \
     && CC=${ANDROID_CLANG} CXX=${ANDROID_CLANGPP} ./configure --build=x86_64-linux-gnu --host=aarch64 --prefix=${PREFIX} --disable-rpath \
     && make -j${THREADS} \
-    && make -j${THREADS} install
+    && make -j${THREADS} install \
+    && rm -rf $(pwd)
 
 ARG BOOST_VERSION=1_74_0
 ARG BOOST_VERSION_DOT=1.74.0
