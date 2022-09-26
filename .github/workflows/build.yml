@@ -162,6 +162,8 @@ jobs:
       run: docker build --tag monero:build-env-android --build-arg THREADS=3 --file Dockerfile.android .
     - name: build
       run: docker run --rm -v /home/runner/work/monero-gui/monero-gui:/monero-gui -e THREADS=3 monero:build-env-android
+    - name: cleanup
+      run: rm -rf /usr/local/android /usr/share/dotnet /usr/local/share/boost /opt/ghc
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ github.job }}
