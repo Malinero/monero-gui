@@ -48,7 +48,11 @@ if(APPLE OR (WIN32 AND NOT STATIC))
         endif()
 
     elseif(WIN32)
+        message(STATUS "!!!!!!!!!!!!!!!!!!!!!!! bin dir")
+        message(STATUS "${_qt_bin_dir}")
         find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+        message(STATUS "!!!!!!!!!!!!!!!!!!!!!!! exe")
+        message(STATUS "${WINDEPLOYQT_EXECUTABLE}")
         add_custom_command(TARGET monero-wallet-gui POST_BUILD
                            COMMAND "${CMAKE_COMMAND}" -E env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}" "$<TARGET_FILE:monero-wallet-gui>" -no-translations -qmldir="${CMAKE_SOURCE_DIR}"
                            COMMENT "Running windeployqt..."
