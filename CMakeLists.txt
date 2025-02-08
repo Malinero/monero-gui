@@ -251,7 +251,7 @@ if(STATIC)
     Qt6QuickLayouts
     modelsplugin
     #Qt6QmlModels
-    #Qt6Core5Compat
+    Qt6Core5Compat
   )
 
   if(WITH_SCANNER)
