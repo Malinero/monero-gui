@@ -86,8 +86,7 @@ def calc_hash_sum(files):
 
 def extract_archives(files, out='.', targets=[]):
   for path in files:
-    if subprocess.Popen(['7z', 'x', '-bd', '-y', '-aoa', f'-o{out}', path] + targets,
-      stdout=subprocess.DEVNULL,
+    if subprocess.Popen(['7zz', 'x', '-bd', '-y', '-aoa', f'-o{out}', path] + targets,
     ).wait() != 0:
       return False
   return True
@@ -101,7 +100,7 @@ def main():
   result = calc_hash_sum([l['name'] for l in links])
   print('result', result, 'expect', expect, flush=True)
   assert result == expect
-  assert extract_archives([l['name'] for l in links], '.', ['{}.{}.{}'.format(major, minor, patch)])
+  assert extract_archives([l['name'] for l in links], '{}.{}.{}'.format(major, minor, patch))
   [pathlib.Path(l['name']).unlink() for l in links]
 
 if __name__ == '__main__':
