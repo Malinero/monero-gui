@@ -131,10 +131,6 @@ if(WITH_SCANNER)
   list(APPEND QT6_LIBRARIES Qt6::Multimedia)
 endif()
 
-if(APPLE)
-  list(APPEND QT6_LIBRARIES Qt6::MacExtras)
-endif()
-
 if(UNIX)
   if(NOT CMAKE_PREFIX_PATH AND DEFINED ENV{CMAKE_PREFIX_PATH})
     message(STATUS "Using CMAKE_PREFIX_PATH environment variable: '$ENV{CMAKE_PREFIX_PATH}'")
@@ -372,7 +368,7 @@ if(APPLE)
 endif()
 
 if (APPLE AND NOT IOS)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=default -std=c++11")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=default")
 endif()
 
 if(APPLE)
