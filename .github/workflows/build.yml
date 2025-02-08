@@ -83,7 +83,9 @@ jobs:
     - name: tmp
       run: find /Users/runner/work/monero-gui -name Qt6Config.cmake
     - name: tmp2
-      run: find /Users/runner/work/monero-gui -name qt6-config.cmake.cmake
+      run: find /Users/runner/work/monero-gui -name qt6-config.cmake
+    - name: tmp3
+      run: find /Users/runner/work/monero-gui
     - name: build
       run: |
         mkdir build && cd build
