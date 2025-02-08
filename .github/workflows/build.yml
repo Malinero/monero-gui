@@ -74,14 +74,14 @@ jobs:
     - name: install dependencies
       run: HOMEBREW_NO_AUTO_UPDATE=1 brew install boost hidapi openssl zmq libpgm miniupnpc expat libunwind-headers protobuf pkg-config python3 p7zip aria2
     - name: install dependencies
-      run: pip3 install defusedxml
+      run: python3 -m venv /tmp/venv && source /tmp/venv/bin/activate && pip3 install defusedxml
     - name: download qt
-      run: python3 monero-gui/.github/qt_helper.py mac_x64 desktop 5.15.2 clang_64 c384008156fe63cc183bade0316828c598ff3e5074397c0c9ccc588d6cdc5aca
+      run: source /tmp/venv/bin/activate && python3 monero-gui/.github/qt_helper.py mac_x64 desktop 6.8.2 clang_64 eb909ac47aee46d9d6bec3bb840d593b9f0903ce86f2c07c5f77cd4cba63eee8
       working-directory: ../
     - name: build
       run: |
         mkdir build && cd build
-        cmake -D CMAKE_BUILD_TYPE=Release -D ARCH=default -D CMAKE_PREFIX_PATH=/Users/runner/work/monero-gui/5.15.2/clang_64 ..
+        cmake -D CMAKE_BUILD_TYPE=Release -D ARCH=default -D CMAKE_PREFIX_PATH=/Users/runner/work/monero-gui/6.8.2/lib/cmake/Qt6 ..
         make
     - name: deploy
       run: make deploy
