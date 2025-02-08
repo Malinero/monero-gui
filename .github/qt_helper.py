@@ -86,7 +86,7 @@ def calc_hash_sum(files):
 
 def extract_archives(files, out='.', targets=[]):
   for path in files:
-    if subprocess.Popen(['7zz', 'x', '-bd', '-y', '-aoa', f'-o{out}', path] + targets,
+    if subprocess.Popen(['7z', 'x', '-bd', '-y', '-aoa', f'-o{out}', path] + targets,
     ).wait() != 0:
       return False
   return True
