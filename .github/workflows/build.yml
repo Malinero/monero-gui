@@ -76,7 +76,7 @@ jobs:
     - name: install dependencies
       run: python3 -m venv venv && source venv/bin/activate && pip3 install defusedxml
     - name: download qt
-      run: python3 monero-gui/.github/qt_helper.py mac_x64 desktop 6.8.2 clang_64 c384008156fe63cc183bade0316828c598ff3e5074397c0c9ccc588d6cdc5aca
+      run: source venv/bin/activate && python3 monero-gui/.github/qt_helper.py mac_x64 desktop 6.8.2 clang_64 c384008156fe63cc183bade0316828c598ff3e5074397c0c9ccc588d6cdc5aca
       working-directory: ../
     - name: build
       run: |
