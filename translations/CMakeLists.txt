@@ -3,7 +3,15 @@ find_package(Qt6Core REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 get_target_property(Qt6_LRELEASE_EXECUTABLE Qt6::lrelease IMPORTED_LOCATION_RELEASE)
+if(NOT Qt6_LRELEASE_EXECUTABLE)
+  find_program(Qt6_LRELEASE_EXECUTABLE lrelease REQUIRED CMAKE_FIND_ROOT_PATH_BOTH)
+endif()
+
 get_target_property(Qt6Core_RCC_EXECUTABLE Qt6::rcc IMPORTED_LOCATION_RELEASE)
+if(NOT Qt6Core_RCC_EXECUTABLE)
+  find_program(Qt6Core_RCC_EXECUTABLE rcc REQUIRED CMAKE_FIND_ROOT_PATH_BOTH)
+endif()
+
 
 file(GLOB TS_FILES *.ts)
 

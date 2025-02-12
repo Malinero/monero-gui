@@ -128,7 +128,7 @@ set(QT6_MODULES
 )
 
 if(WITH_SCANNER)
-  list(APPEND QT6_LIBRARIES Qt6::Multimedia)
+  list(APPEND QT6_MODULES Multimedia)
 endif()
 
 if(UNIX)
@@ -328,7 +328,6 @@ if(ANDROID)
     jnigraphics
     android
     EGL
-    Qt6VirtualKeyboard_${CMAKE_ANDROID_ARCH_ABI}
     c++_shared
   )
   foreach(LIBRARY ${QT6_EXTRA_LIBRARIES_LIST})
