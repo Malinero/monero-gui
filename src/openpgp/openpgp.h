@@ -32,6 +32,7 @@
 #include <vector>
 
 #include <gcrypt.h>
+#undef interface
 
 #include <span.h>
 
