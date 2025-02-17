@@ -118,7 +118,13 @@ if(APPLE OR (WIN32 AND NOT STATIC))
             libicutu74.dll
             libicuuc74.dll
         )
+
         list(TRANSFORM WIN_DEPLOY_DLLS PREPEND "$ENV{MSYSTEM_PREFIX}/bin/")
+
+        foreach(ITEM ${WIN_DEPLOY_DLLS})
+            find_file(ITEM_VAR ${ITEM} REQUIRED)
+        endforeach()
+
         add_custom_command(TARGET deploy
                            POST_BUILD
                            COMMAND ${CMAKE_COMMAND} -E copy ${WIN_DEPLOY_DLLS} "$<TARGET_FILE_DIR:monero-wallet-gui>"
