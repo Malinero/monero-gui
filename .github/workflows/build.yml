@@ -7,7 +7,7 @@ env:
     df -h
     du -hs /opt/*
     du -hs /usr/*
-    sudo rm -rf /usr/local/.ghcup /usr/share/dotnet /usr/share/swift /usr/share/miniconda /usr/local/lib/android /opt/hostedtoolcache /opt/ghc
+    sudo rm -rf /usr/local/.ghcup /usr/share/dotnet /usr/share/swift /usr/share/miniconda /usr/local/lib/android /opt/hostedtoolcache
     df -h
     du -hs /opt/*
     du -hs /usr/*

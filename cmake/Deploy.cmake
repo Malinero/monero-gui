@@ -120,7 +120,10 @@ if(APPLE OR (WIN32 AND NOT STATIC))
         )
 
         list(TRANSFORM WIN_DEPLOY_DLLS PREPEND "$ENV{MSYSTEM_PREFIX}/bin/")
-
+        execute_process(COMMAND find $ENV{MSYSTEM_PREFIX} OUTPUT_VARIABLE FIND_BIN)
+        message(STATUS "!!!!!!!!!!!!!!!!")
+        message(STATUS "${FIND_BIN}")
+        
         foreach(ITEM ${WIN_DEPLOY_DLLS})
             find_file(ITEM_VAR ${ITEM} REQUIRED)
         endforeach()
