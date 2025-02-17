@@ -120,7 +120,8 @@ if(APPLE OR (WIN32 AND NOT STATIC))
         )
 
         foreach(ITEM ${WIN_DEPLOY_DLLS})
-            find_file(ITEM_VAR ${ITEM} REQUIRED)
+            find_file(${ITEM}_VAR ${ITEM} REQUIRED)
+            message(STATUS "found for ${ITEM}: ${${ITEM}_VAR}")
         endforeach()
 
         list(TRANSFORM WIN_DEPLOY_DLLS PREPEND "$ENV{MSYSTEM_PREFIX}/bin/")
