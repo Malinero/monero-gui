@@ -7,7 +7,7 @@ if(APPLE OR (WIN32 AND NOT STATIC))
         find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
         add_custom_command(TARGET deploy
                            POST_BUILD
-                           COMMAND "${MACDEPLOYQT_EXECUTABLE}" "$<TARGET_FILE_DIR:monero-wallet-gui>/../.." -always-overwrite -qmldir="${CMAKE_SOURCE_DIR}"
+                           COMMAND "${MACDEPLOYQT_EXECUTABLE}" "$<TARGET_FILE_DIR:monero-wallet-gui>/../.." -always-overwrite -qmldir="${CMAKE_SOURCE_DIR}" -verbose=3
                            COMMENT "Running macdeployqt..."
         )
 
@@ -65,7 +65,7 @@ if(APPLE OR (WIN32 AND NOT STATIC))
         message(STATUS "!!!!!!!!!!!!!!!!!!!!!!! exe")
         message(STATUS "${WINDEPLOYQT_EXECUTABLE}")
         add_custom_command(TARGET monero-wallet-gui POST_BUILD
-                           COMMAND "${CMAKE_COMMAND}" -E env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}" "$<TARGET_FILE:monero-wallet-gui>" -no-translations -qmldir="${CMAKE_SOURCE_DIR}"
+                           COMMAND "${CMAKE_COMMAND}" -E env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}" "$<TARGET_FILE:monero-wallet-gui>" -no-translations -qmldir="${CMAKE_SOURCE_DIR}" -verbose=3
                            COMMENT "Running windeployqt..."
         )
         set(WIN_DEPLOY_DLLS
