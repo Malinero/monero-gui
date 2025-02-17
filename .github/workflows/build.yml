@@ -5,12 +5,12 @@ on: [push, pull_request]
 env:
   FREE_DISKSPACE: |
     df -h
-    sudo rm -rf /usr/local/.ghcup /usr/share/dotnet /usr/share/swift /usr/share/miniconda /usr/local/lib/android
-    du -hs /opt/hostedtoolcache/CodeQL
-    du -hs /opt/hostedtoolcache
-    sudo rm -rf /opt/ghc
     du -hs /opt/*
+    du -hs /usr/*
+    sudo rm -rf /usr/local/.ghcup /usr/share/dotnet /usr/share/swift /usr/share/miniconda /usr/local/lib/android /opt/hostedtoolcache /opt/ghc
     df -h
+    du -hs /opt/*
+    du -hs /usr/*
 
 jobs:
   build-macos:
