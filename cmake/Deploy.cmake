@@ -119,15 +119,15 @@ if(APPLE OR (WIN32 AND NOT STATIC))
             libicuuc76.dll
         )
 
+        foreach(ITEM ${WIN_DEPLOY_DLLS})
+            find_file(ITEM_VAR ${ITEM} REQUIRED)
+        endforeach()
+
         list(TRANSFORM WIN_DEPLOY_DLLS PREPEND "$ENV{MSYSTEM_PREFIX}/bin/")
         execute_process(COMMAND find $ENV{MSYSTEM_PREFIX}/bin OUTPUT_VARIABLE FIND_BIN)
         message(STATUS "!!!!!!!!!!!!!!!!")
         message(STATUS "${FIND_BIN}")
         
-        foreach(ITEM ${WIN_DEPLOY_DLLS})
-            find_file(ITEM_VAR ${ITEM} REQUIRED)
-        endforeach()
-
         add_custom_command(TARGET deploy
                            POST_BUILD
                            COMMAND ${CMAKE_COMMAND} -E copy ${WIN_DEPLOY_DLLS} "$<TARGET_FILE_DIR:monero-wallet-gui>"
