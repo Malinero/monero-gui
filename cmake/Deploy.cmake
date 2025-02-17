@@ -73,7 +73,6 @@ if(APPLE OR (WIN32 AND NOT STATIC))
             libboost_filesystem-mt.dll
             libboost_locale-mt.dll
             libboost_program_options-mt.dll
-            libboost_regex-mt.dll
             libboost_serialization-mt.dll
             libboost_thread-mt.dll
             libprotobuf.dll
@@ -118,6 +117,11 @@ if(APPLE OR (WIN32 AND NOT STATIC))
             libicutu76.dll
             libicuuc76.dll
         )
+
+        # Boost Regex is header-only since 1.77
+        if (Boost_VERSION_STRING VERSION_LESS 1.77.0)
+            list(APPEND BOOST_COMPONENTS libboost_regex-mt.dll)
+        endif()
 
         foreach(ITEM ${WIN_DEPLOY_DLLS})
             find_file(${ITEM}_VAR ${ITEM} REQUIRED)
