@@ -156,7 +156,7 @@ if(WITH_SCANNER)
     endif()
 endif()
 
-if(STATIC OR ANDROID OR APPLE)
+if(STATIC OR ANDROID OR APPLE OR MINGW)
     # Allows to bundle quick control styles
     qt6_add_qml_module(monero-wallet-gui
         URI org.monero-project.monero-wallet-gui
