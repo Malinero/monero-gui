@@ -71,7 +71,7 @@ set(monero_wallet_gui_sources
     ${RESOURCES}
 )
 
-if(APPLE)
+if(APPLE OR MINGW)
     qt_add_executable(monero-wallet-gui ${monero_wallet_gui_sources})
 elseif(NOT ANDROID)
     add_executable(monero-wallet-gui ${EXECUTABLE_FLAG} ${monero_wallet_gui_sources})
