@@ -69,7 +69,7 @@ if(APPLE OR (WIN32 AND NOT STATIC))
         message(STATUS "!!!!!!!!!!!!!!!!!!!!!!! exe")
         message(STATUS "${_qml_bin_dir}")
         add_custom_command(TARGET monero-wallet-gui POST_BUILD
-                           COMMAND "${CMAKE_COMMAND}" -E env PATH="${_qml_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}" "$<TARGET_FILE:monero-wallet-gui>" -no-translations -qmldir="${CMAKE_SOURCE_DIR}" -verbose=3
+                           COMMAND "${CMAKE_COMMAND}" -E env PATH="${_qml_bin_dir}:${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}" "$<TARGET_FILE:monero-wallet-gui>" -no-translations -qmldir="${CMAKE_SOURCE_DIR}" -verbose=3
                            COMMENT "Running windeployqt..."
         )
         set(WIN_DEPLOY_DLLS
