@@ -105,4 +105,5 @@ CMD mkdir -p build/x86_64-w64-mingw32/release \
        -D CMAKE_TOOLCHAIN_FILE=/depends/x86_64-w64-mingw32/share/toolchain.cmake ../../.. \
        -D CMAKE_PREFIX_PATH=/usr/x86_64-w64-mingw32 \
     && sed -i -e "s#-licu#-L/depends/x86_64-w64-mingw32/lib -licu#" src/CMakeFiles/monero-wallet-gui.dir/linkLibs.rsp \
+    && sed -i '37i #include <cstdint>' ../../../monero/contrib/epee/include/net/http_base.h \
     && make -j$THREADS
