@@ -163,7 +163,7 @@ if(STATIC OR ANDROID OR APPLE OR MINGW)
 
     # Allows to bundle quick control styles
     qt6_add_qml_module(monero-wallet-gui
-        URI org.monero-project.monero-wallet-gui
+        URI src
         QML_FILES
             ${CMAKE_SOURCE_DIR}/main.qml
     )
