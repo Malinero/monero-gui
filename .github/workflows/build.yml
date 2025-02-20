@@ -64,9 +64,9 @@ jobs:
         update: true
         install: mingw-w64-x86_64-toolchain make mingw-w64-x86_64-pcre mingw-w64-x86_64-cmake mingw-w64-x86_64-boost mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb mingw-w64-x86_64-unbound git mingw-w64-x86_64-qt6 mingw-w64-x86_64-libgcrypt
     - name: build
-      run: DEV_MODE=ON make release-win64 -j2
+      run: DEV_MODE=ON make release-win64 -j2 VERBOSE=1
     - name: deploy
-      run: make deploy
+      run: make deploy VERBOSE=1
       working-directory: build/release
     - name: test qml
       run: build/release/bin/monero-wallet-gui --test-qml
