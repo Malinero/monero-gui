@@ -161,7 +161,7 @@ if(STATIC OR ANDROID OR APPLE OR MINGW)
     qt6_add_qml_module(monero-wallet-gui
         URI org.monero-project.monero-wallet-gui
         QML_FILES
-            ../main.qml
+            ${CMAKE_SOURCE_DIR}/main.qml
     )
     qt6_import_qml_plugins(monero-wallet-gui)
 endif()
