@@ -158,7 +158,7 @@ endif()
 
 if(STATIC OR ANDROID OR APPLE OR MINGW)
     set_source_files_properties(${CMAKE_SOURCE_DIR}/main.qml PROPERTIES
-        QT_RESOURCE_ALIAS main.qml
+        QT_RESOURCE_ALIAS ../main.qml
     )
 
     # Allows to bundle quick control styles
