@@ -156,16 +156,12 @@ if(WITH_SCANNER)
     endif()
 endif()
 
-if(STATIC OR ANDROID OR APPLE OR MINGW)
-    set_source_files_properties(${CMAKE_SOURCE_DIR}/main.qml PROPERTIES
-        QT_RESOURCE_ALIAS ../main.qml
-    )
-
+if(STATIC OR ANDROID OR APPLE)
     # Allows to bundle quick control styles
     qt6_add_qml_module(monero-wallet-gui
-        URI src
+        URI org.monero_project.monero_wallet_gui
         QML_FILES
-            ${CMAKE_SOURCE_DIR}/main.qml
+            ../main.qml
     )
     qt6_import_qml_plugins(monero-wallet-gui)
 endif()
