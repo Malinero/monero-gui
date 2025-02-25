@@ -50,11 +50,17 @@ if(APPLE OR (WIN32 AND NOT STATIC))
     elseif(WIN32)
         find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
 
+        add_custom_command(TARGET monero-wallet-gui PRE_BUILD
+                           COMMAND find / -name "*GLES*"
+                           COMMENT "Finding..."
+        )
+
+        find_file(_xxx "libGLESv2.dll" REQUIRED)
+        message(STATUS "found? libGLESv2 at ${_xxx}")
+ 
         set(CMAKE_FIND_DEBUG_MODE TRUE)
         find_library(_gl_var GLESv2 REQUIRED)
-
-        #get_target_property(_qmlimportscanner_executable Qt5::qmlimportscanner IMPORTED_LOCATION)
-        #get_filename_component(_qml_bin_dir "${_qmlimportscanner_executable}" DIRECTORY)
+        message(STATUS "found libGLESv2 at ${_gl_var}")
 
         add_custom_command(TARGET monero-wallet-gui POST_BUILD
                            COMMAND "${CMAKE_COMMAND}" -E env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}" "$<TARGET_FILE:monero-wallet-gui>" -no-translations -qmldir="${CMAKE_SOURCE_DIR}" -verbose=3
