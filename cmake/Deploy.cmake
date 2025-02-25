@@ -49,7 +49,7 @@ if(APPLE OR (WIN32 AND NOT STATIC))
 
     elseif(WIN32)
         find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
-        get_target_property(_qmlimportscanner_executable Qt6::qmlimportscanner IMPORTED_LOCATION)
+        get_target_property(_qmlimportscanner_executable Qt5::qmlimportscanner IMPORTED_LOCATION)
         get_filename_component(_qml_bin_dir "${_qmlimportscanner_executable}" DIRECTORY)
 
         add_custom_command(TARGET monero-wallet-gui POST_BUILD
