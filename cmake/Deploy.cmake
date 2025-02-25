@@ -50,6 +50,9 @@ if(APPLE OR (WIN32 AND NOT STATIC))
     elseif(WIN32)
         find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
 
+        set(CMAKE_FIND_DEBUG_MODE TRUE)
+        find_library(_gl_var GLESv2 REQUIRED)
+
         #get_target_property(_qmlimportscanner_executable Qt5::qmlimportscanner IMPORTED_LOCATION)
         #get_filename_component(_qml_bin_dir "${_qmlimportscanner_executable}" DIRECTORY)
 
